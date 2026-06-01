@@ -1,17 +1,8 @@
 :root {
-    /* Palette monochrome chirurgicale */
-    --bg-main: #0e0f11;
-    --surface: #131519;
+    --bg-main: #0a0a0c;
+    --surface: #121317;
     --text-primary: #ffffff;
-    --text-muted: #626875;
-    
-    /* Accents subtils */
-    --accent-glow: rgba(255, 255, 255, 0.03);
-    
-    /* Ombres Neumorphiques Matrix (Sombre) */
-    --shadow-out: 6px 6px 16px #08090a, -6px -6px 16px #1e2128;
-    --shadow-in: inset 4px 4px 10px #08090a, inset -4px -4px 10px #1e2128;
-    
+    --accent-secu: #00ffcc; /* Vert cyber pour focus/sécurité */
     --font-system: system-ui, -apple-system, sans-serif;
 }
 
@@ -19,79 +10,72 @@ body {
     background-color: var(--bg-main);
     color: var(--text-primary);
     font-family: var(--font-system);
-    margin: 0;
-    padding: 2rem;
+    
+    /* 🔒 SÉCURITÉ : Empêche la sélection globale du texte */
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
 }
 
-/* Structure extrudée (sort de l'écran) */
+/* 🔒 SÉCURITÉ : Interdit le glisser-déposer (ex: vol d'images) */
+img, a, .no-drag {
+    -webkit-user-drag: none;
+}
+
+/* 🔒 SÉCURITÉ : Masquage par flou des données sensibles (révélé au survol) */
+.data-blur {
+    filter: blur(6px);
+    transition: filter 0.3s ease;
+    cursor: crosshair;
+}
+.data-blur:hover {
+    filter: blur(0);
+}
+
 .glass-card {
     background: var(--surface);
-    border-radius: 20px;
+    border-radius: 16px;
     padding: 2.5rem;
-    box-shadow: var(--shadow-out);
-    border: 1px solid rgba(255, 255, 255, 0.01);
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    /* Ombre Neumorphique plus profonde */
+    box-shadow: 10px 10px 20px #040405, -10px -10px 20px #1a1c23;
+    border: 1px solid rgba(0, 255, 204, 0.05);
 }
 
-.glass-card:hover {
-    transform: translateY(-2px);
-    background: linear-gradient(145deg, #15171c, #111317);
-}
-
-/* Bouton sculpté dans l'interface */
-.btn-premium {
-    background: var(--surface);
-    color: var(--text-primary);
-    font-family: var(--font-system);
-    font-weight: 600;
-    font-size: 0.9rem;
-    letter-spacing: 1px;
-    padding: 0.9rem 2rem;
-    border: none;
-    border-radius: 12px;
-    box-shadow: var(--shadow-out);
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.btn-premium:hover {
-    color: #00ffcc; /* Unique touche de couleur au survol */
-    box-shadow: 2px 2px 8px #08090a, -2px -2px 8px #1e2128;
-}
-
-.btn-premium:active {
-    box-shadow: var(--shadow-in);
-    transform: scale(0.98);
-}
-
-/* Texte épuré sans dégradé multicolore */
-.text-gradient {
-    color: var(--text-primary);
-    font-weight: 700;
-    letter-spacing: -0.5px;
-    text-shadow: 0 0 20px var(--accent-glow);
-}
-
-.text-muted {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-    letter-spacing: 0.2px;
-}
-
-/* Input incrusté (creusé dans l'interface) */
 .glass-input {
     background: var(--bg-main);
-    border: none;
-    border-radius: 12px;
+    border: 1px solid transparent;
+    border-radius: 8px;
     padding: 1rem 1.2rem;
     color: #fff;
-    font-family: var(--font-system);
-    box-shadow: var(--shadow-in);
+    /* Effet "creusé" */
+    box-shadow: inset 5px 5px 10px #040405, inset -5px -5px 10px #1a1c23;
     outline: none;
-    transition: all 0.3s ease;
+    transition: 0.3s ease;
+    width: 100%;
+    
+    /* 🔒 SÉCURITÉ : Autorise la sélection de texte UNIQUEMENT dans l'input */
+    user-select: text;
+    -webkit-user-select: text;
 }
 
 .glass-input:focus {
-    box-shadow: var(--shadow-in), 0 0 10px rgba(0, 255, 204, 0.1);
-    background: #0b0c0e;
+    border-color: var(--accent-secu);
+    box-shadow: inset 5px 5px 10px #040405, inset -5px -5px 10px #1a1c23, 0 0 12px rgba(0, 255, 204, 0.2);
+}
+
+.btn-premium {
+    background: var(--surface);
+    color: var(--text-primary);
+    font-weight: 600;
+    padding: 0.9rem 2rem;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 6px 6px 12px #040405, -6px -6px 12px #1a1c23;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-premium:active {
+    box-shadow: inset 4px 4px 8px #040405, inset -4px -4px 8px #1a1c23;
+    color: var(--accent-secu);
 }
