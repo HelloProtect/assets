@@ -1,1 +1,1 @@
-# assets
+Do not copy
