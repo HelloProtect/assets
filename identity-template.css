@@ -2,7 +2,6 @@
     --bg-main: #eef3f8;
     --surface: #e6d5c3;
     --text-primary: #000000;
-    --accent-secu: #000000;
     --font-system: system-ui, -apple-system, sans-serif;
 }
 
@@ -10,8 +9,6 @@ body {
     background-color: var(--bg-main);
     color: var(--text-primary);
     font-family: var(--font-system);
-    
-    /* 🔒 SÉCURITÉ */
     user-select: none;
     -webkit-user-select: none;
 }
@@ -20,6 +17,7 @@ img, a, .no-drag {
     -webkit-user-drag: none;
 }
 
+/* 🔒 Sécurité : Flou de données sans brillance */
 .data-blur {
     filter: blur(6px);
     transition: filter 0.3s ease;
@@ -27,38 +25,37 @@ img, a, .no-drag {
 }
 .data-blur:hover { filter: blur(0); }
 
+/* Carte Neumorphique pure (sans reflet blanc) */
 .glass-card {
     background: var(--surface);
     border-radius: 16px;
     padding: 2.5rem;
-    /* Ombres adaptées au beige (#e6d5c3) */
     box-shadow: 8px 8px 16px #d1c1b1, -8px -8px 16px #fbe9d5;
-    border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
+/* Input creusé (sans lueur de focus) */
 .glass-input {
     background: var(--bg-main);
     border: 1px solid transparent;
     border-radius: 8px;
     padding: 1rem 1.2rem;
     color: var(--text-primary);
-    /* Ombres creusées adaptées au bleu très clair (#eef3f8) */
     box-shadow: inset 5px 5px 10px #d9dee2, inset -5px -5px 10px #ffffff;
     outline: none;
-    transition: 0.3s ease;
+    transition: border-color 0.3s ease;
     width: 100%;
-    
-    /* 🔒 SÉCURITÉ : Autorise la saisie */
     user-select: text;
     -webkit-user-select: text;
 }
 
 .glass-input:focus {
-    border-color: var(--accent-secu);
-    box-shadow: inset 5px 5px 10px #d9dee2, inset -5px -5px 10px #ffffff, 0 0 8px rgba(0, 0, 0, 0.1);
+    border-color: var(--text-primary); /* Simple encadrement noir */
 }
 
+/* Bouton avec événement d'ondulation (Ripple Effect) */
 .btn-premium {
+    position: relative;
+    overflow: hidden; /* Contient l'ondulation */
     background: var(--surface);
     color: var(--text-primary);
     font-weight: 600;
@@ -67,9 +64,34 @@ img, a, .no-drag {
     border-radius: 8px;
     box-shadow: 6px 6px 12px #d1c1b1, -6px -6px 12px #fbe9d5;
     cursor: pointer;
-    transition: 0.2s;
 }
 
-.btn-premium:active {
-    box-shadow: inset 4px 4px 8px #d1c1b1, inset -4px -4px 8px #fbe9d5;
+/* L'élément d'ondulation */
+.btn-premium::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    background: rgba(0, 0, 0, 0.15); /* Onde noire transparente */
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+}
+
+/* Déclenchement de l'ondulation au clic */
+.btn-premium:active::after {
+    animation: ripple 0.4s ease-out;
+}
+
+@keyframes ripple {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(6);
+        opacity: 0;
+    }
 }
