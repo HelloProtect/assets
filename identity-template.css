@@ -2,6 +2,7 @@
     --bg-main: #eef3f8;
     --surface: #e6d5c3;
     --text-primary: #000000;
+    --text-invert: #ffffff;
     --font-system: system-ui, -apple-system, sans-serif;
 }
 
@@ -14,63 +15,18 @@ body {
     -webkit-user-select: none;
 }
 img, a, .no-drag { -webkit-user-drag: none; }
-.data-blur { filter: blur(6px); transition: filter 0.3s; cursor: crosshair; }
-.data-blur:hover { filter: blur(0); }
 
-/* Éléments à vagues intégrales */
-.glass-card, .btn-premium {
-    position: relative;
+/* Unique animation globale pour toutes les vagues */
+@keyframes unifiedWave {
+    from { background-position: 0 0, 0 100%, 0 0, 100% 0; }
+    to { background-position: 20px 0, -20px 100%, 0 20px, 100% -20px; }
+}
+
+.glass-card {
     background: var(--surface);
-    border: 6px solid transparent; /* Réserve l'espace pour les vagues */
+    padding: 2.5rem;
+    border: 2px solid var(--text-primary);
 }
-
-/* 1. Vagues Horizontales (Haut et Bas) */
-.glass-card::before, .btn-premium::before {
-    content: "";
-    position: absolute;
-    top: -6px; bottom: -6px; left: -6px; right: -6px;
-    background-image: 
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='6'%3E%3Cpath d='M0 5 h5 v-4 h10 v4 h5' fill='none' stroke='black' stroke-width='2'/%3E%3C/svg%3E"),
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='6'%3E%3Cpath d='M0 1 h5 v4 h10 v-4 h5' fill='none' stroke='black' stroke-width='2'/%3E%3C/svg%3E");
-    background-position: top left, bottom left;
-    background-repeat: repeat-x;
-    background-size: 20px 6px;
-    pointer-events: none;
-}
-
-/* 2. Vagues Verticales (Gauche et Droite) */
-.glass-card::after, .btn-premium::after {
-    content: "";
-    position: absolute;
-    top: -6px; bottom: -6px; left: -6px; right: -6px;
-    background-image: 
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='20'%3E%3Cpath d='M5 0 v5 h-4 v10 h4 v5' fill='none' stroke='black' stroke-width='2'/%3E%3C/svg%3E"),
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='20'%3E%3Cpath d='M1 0 v5 h4 v10 h-4 v5' fill='none' stroke='black' stroke-width='2'/%3E%3C/svg%3E");
-    background-position: top left, top right;
-    background-repeat: repeat-y;
-    background-size: 6px 20px;
-    pointer-events: none;
-}
-
-/* Animations de défilement des vagues au survol */
-@keyframes crawlH {
-    from { background-position: 0 0, 0 100%; }
-    to { background-position: 20px 0, -20px 100%; }
-}
-@keyframes crawlV {
-    from { background-position: 0 0, 100% 0; }
-    to { background-position: 0 20px, 100% -20px; }
-}
-
-.glass-card:hover::before, .btn-premium:hover::before {
-    animation: crawlH 0.4s infinite linear;
-}
-.glass-card:hover::after, .btn-premium:hover::after {
-    animation: crawlV 0.4s infinite linear;
-}
-
-/* Composants */
-.glass-card { padding: 2.5rem; }
 
 .glass-input {
     background: var(--bg-main);
@@ -80,13 +36,48 @@ img, a, .no-drag { -webkit-user-drag: none; }
     outline: none;
     width: 100%;
     user-select: text;
-    -webkit-user-select: text;
 }
 
+/* Bouton : Rupture avec le fond au survol */
 .btn-premium {
+    position: relative;
+    background: var(--surface);
+    color: var(--text-primary);
     font-weight: 600;
     padding: 0.9rem 2rem;
-    border: none;
+    border: 6px solid transparent; /* Espace pour les vagues */
     cursor: pointer;
+    transition: background 0.2s, color 0.2s;
 }
-.btn-premium:active { transform: scale(0.98); }
+
+/* Toutes les vagues (les 4 côtés) regroupées ici */
+.btn-premium::before {
+    content: "";
+    position: absolute;
+    top: -6px; bottom: -6px; left: -6px; right: -6px;
+    background-image: 
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='6'%3E%3Cpath d='M0 5 h5 v-4 h10 v4 h5' fill='none' stroke='black' stroke-width='2'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='6'%3E%3Cpath d='M0 1 h5 v4 h10 v-4 h5' fill='none' stroke='black' stroke-width='2'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='20'%3E%3Cpath d='M5 0 v5 h-4 v10 h4 v5' fill='none' stroke='black' stroke-width='2'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='20'%3E%3Cpath d='M1 0 v5 h4 v10 h-4 v5' fill='none' stroke='black' stroke-width='2'/%3E%3C/svg%3E");
+    background-position: top left, bottom left, top left, top right;
+    background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+    background-size: 20px 6px, 20px 6px, 6px 20px, 6px 20px;
+    pointer-events: none;
+    transition: filter 0.2s;
+}
+
+/* Action unique au survol : Plus du tout sur le fond */
+.btn-premium:hover {
+    background: var(--text-primary); /* Devient noir pur */
+    color: var(--text-invert);    /* Texte blanc */
+}
+
+.btn-premium:hover::before {
+    filter: invert(1); /* Transforme les vagues noires en blanc pur */
+    animation: unifiedWave 0.4s infinite linear; /* Lance l'unique animation */
+}
+
+.btn-premium:active {
+    transform: scale(0.98);
+}
