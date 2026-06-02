@@ -17,7 +17,7 @@ img, a, .no-drag {
     -webkit-user-drag: none;
 }
 
-/* 🔒 Sécurité : Flou de données sans brillance */
+/* 🔒 Sécurité : Flou de données */
 .data-blur {
     filter: blur(6px);
     transition: filter 0.3s ease;
@@ -25,15 +25,30 @@ img, a, .no-drag {
 }
 .data-blur:hover { filter: blur(0); }
 
-/* Carte Neumorphique pure (sans reflet blanc) */
+/* Animation des coins en forme de vague (Liquid shape) */
+@keyframes cornerWaves {
+    0% { border-radius: 16px 16px 16px 16px; }
+    25% { border-radius: 40% 16px 50% 30% / 50% 16px 40% 30%; }
+    50% { border-radius: 16px 50% 30% 40% / 16px 40% 30% 50%; }
+    75% { border-radius: 30% 16px 40% 50% / 40% 16px 50% 30%; }
+    100% { border-radius: 16px 16px 16px 16px; }
+}
+
+/* Carte Neumorphique avec coins ondulants au survol */
 .glass-card {
     background: var(--surface);
     border-radius: 16px;
     padding: 2.5rem;
     box-shadow: 8px 8px 16px #d1c1b1, -8px -8px 16px #fbe9d5;
+    transition: transform 0.5s ease;
 }
 
-/* Input creusé (sans lueur de focus) */
+.glass-card:hover {
+    transform: scale(1.01);
+    animation: cornerWaves 3s infinite linear;
+}
+
+/* Input creusé */
 .glass-input {
     background: var(--bg-main);
     border: 1px solid transparent;
@@ -47,15 +62,10 @@ img, a, .no-drag {
     user-select: text;
     -webkit-user-select: text;
 }
+.glass-input:focus { border-color: var(--text-primary); }
 
-.glass-input:focus {
-    border-color: var(--text-primary); /* Simple encadrement noir */
-}
-
-/* Bouton avec événement d'ondulation (Ripple Effect) */
+/* Bouton avec coins ondulants au survol */
 .btn-premium {
-    position: relative;
-    overflow: hidden; /* Contient l'ondulation */
     background: var(--surface);
     color: var(--text-primary);
     font-weight: 600;
@@ -66,32 +76,10 @@ img, a, .no-drag {
     cursor: pointer;
 }
 
-/* L'élément d'ondulation */
-.btn-premium::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 20px;
-    height: 20px;
-    background: rgba(0, 0, 0, 0.15); /* Onde noire transparente */
-    border-radius: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    opacity: 0;
+.btn-premium:hover {
+    animation: cornerWaves 2s infinite linear;
 }
 
-/* Déclenchement de l'ondulation au clic */
-.btn-premium:active::after {
-    animation: ripple 0.4s ease-out;
-}
-
-@keyframes ripple {
-    0% {
-        transform: translate(-50%, -50%) scale(0);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(-50%, -50%) scale(6);
-        opacity: 0;
-    }
+.btn-premium:active {
+    box-shadow: inset 4px 4px 8px #d1c1b1, inset -4px -4px 8px #fbe9d5;
 }
