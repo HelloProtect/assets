@@ -1,8 +1,8 @@
 :root {
-    --bg-main: #0a0a0c;
-    --surface: #121317;
-    --text-primary: #ffffff;
-    --accent-secu: #00ffcc; /* Vert cyber pour focus/sécurité */
+    --bg-main: #eef3f8;
+    --surface: #e6d5c3;
+    --text-primary: #000000;
+    --accent-secu: #000000;
     --font-system: system-ui, -apple-system, sans-serif;
 }
 
@@ -11,34 +11,29 @@ body {
     color: var(--text-primary);
     font-family: var(--font-system);
     
-    /* 🔒 SÉCURITÉ : Empêche la sélection globale du texte */
+    /* 🔒 SÉCURITÉ */
     user-select: none;
     -webkit-user-select: none;
-    -moz-user-select: none;
 }
 
-/* 🔒 SÉCURITÉ : Interdit le glisser-déposer (ex: vol d'images) */
 img, a, .no-drag {
     -webkit-user-drag: none;
 }
 
-/* 🔒 SÉCURITÉ : Masquage par flou des données sensibles (révélé au survol) */
 .data-blur {
     filter: blur(6px);
     transition: filter 0.3s ease;
     cursor: crosshair;
 }
-.data-blur:hover {
-    filter: blur(0);
-}
+.data-blur:hover { filter: blur(0); }
 
 .glass-card {
     background: var(--surface);
     border-radius: 16px;
     padding: 2.5rem;
-    /* Ombre Neumorphique plus profonde */
-    box-shadow: 10px 10px 20px #040405, -10px -10px 20px #1a1c23;
-    border: 1px solid rgba(0, 255, 204, 0.05);
+    /* Ombres adaptées au beige (#e6d5c3) */
+    box-shadow: 8px 8px 16px #d1c1b1, -8px -8px 16px #fbe9d5;
+    border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
 .glass-input {
@@ -46,21 +41,21 @@ img, a, .no-drag {
     border: 1px solid transparent;
     border-radius: 8px;
     padding: 1rem 1.2rem;
-    color: #fff;
-    /* Effet "creusé" */
-    box-shadow: inset 5px 5px 10px #040405, inset -5px -5px 10px #1a1c23;
+    color: var(--text-primary);
+    /* Ombres creusées adaptées au bleu très clair (#eef3f8) */
+    box-shadow: inset 5px 5px 10px #d9dee2, inset -5px -5px 10px #ffffff;
     outline: none;
     transition: 0.3s ease;
     width: 100%;
     
-    /* 🔒 SÉCURITÉ : Autorise la sélection de texte UNIQUEMENT dans l'input */
+    /* 🔒 SÉCURITÉ : Autorise la saisie */
     user-select: text;
     -webkit-user-select: text;
 }
 
 .glass-input:focus {
     border-color: var(--accent-secu);
-    box-shadow: inset 5px 5px 10px #040405, inset -5px -5px 10px #1a1c23, 0 0 12px rgba(0, 255, 204, 0.2);
+    box-shadow: inset 5px 5px 10px #d9dee2, inset -5px -5px 10px #ffffff, 0 0 8px rgba(0, 0, 0, 0.1);
 }
 
 .btn-premium {
@@ -70,12 +65,11 @@ img, a, .no-drag {
     padding: 0.9rem 2rem;
     border: none;
     border-radius: 8px;
-    box-shadow: 6px 6px 12px #040405, -6px -6px 12px #1a1c23;
+    box-shadow: 6px 6px 12px #d1c1b1, -6px -6px 12px #fbe9d5;
     cursor: pointer;
     transition: 0.2s;
 }
 
 .btn-premium:active {
-    box-shadow: inset 4px 4px 8px #040405, inset -4px -4px 8px #1a1c23;
-    color: var(--accent-secu);
+    box-shadow: inset 4px 4px 8px #d1c1b1, inset -4px -4px 8px #fbe9d5;
 }
