@@ -25,27 +25,34 @@ img, a, .no-drag {
 }
 .data-blur:hover { filter: blur(0); }
 
-/* Animation des coins en forme de vague (Liquid shape) */
-@keyframes cornerWaves {
-    0% { border-radius: 16px 16px 16px 16px; }
-    25% { border-radius: 40% 16px 50% 30% / 50% 16px 40% 30%; }
-    50% { border-radius: 16px 50% 30% 40% / 16px 40% 30% 50%; }
-    75% { border-radius: 30% 16px 40% 50% / 40% 16px 50% 30%; }
-    100% { border-radius: 16px 16px 16px 16px; }
+/* Animation des petites vagues (ondes de choc subtiles autour de l'objet) */
+@keyframes wavelets {
+    0% {
+        box-shadow: 
+            8px 8px 16px #d1c1b1, -8px -8px 16px #fbe9d5, /* Ombres de base */
+            0 0 0 0px rgba(210, 193, 177, 0.6),
+            0 0 0 0px rgba(210, 193, 177, 0.4);
+    }
+    100% {
+        box-shadow: 
+            8px 8px 16px #d1c1b1, -8px -8px 16px #fbe9d5, /* Ombres de base */
+            0 0 0 12px rgba(210, 193, 177, 0),
+            0 0 0 24px rgba(210, 193, 177, 0);
+    }
 }
 
-/* Carte Neumorphique avec coins ondulants au survol */
+/* Carte avec effet d'ondes autour au survol */
 .glass-card {
     background: var(--surface);
     border-radius: 16px;
     padding: 2.5rem;
     box-shadow: 8px 8px 16px #d1c1b1, -8px -8px 16px #fbe9d5;
-    transition: transform 0.5s ease;
+    transition: transform 0.2s ease;
 }
 
 .glass-card:hover {
-    transform: scale(1.01);
-    animation: cornerWaves 3s infinite linear;
+    transform: translateY(-2px);
+    animation: wavelets 1.2s infinite linear;
 }
 
 /* Input creusé */
@@ -64,7 +71,7 @@ img, a, .no-drag {
 }
 .glass-input:focus { border-color: var(--text-primary); }
 
-/* Bouton avec coins ondulants au survol */
+/* Bouton avec effet d'ondes autour au survol */
 .btn-premium {
     background: var(--surface);
     color: var(--text-primary);
@@ -74,10 +81,12 @@ img, a, .no-drag {
     border-radius: 8px;
     box-shadow: 6px 6px 12px #d1c1b1, -6px -6px 12px #fbe9d5;
     cursor: pointer;
+    transition: transform 0.2s ease;
 }
 
 .btn-premium:hover {
-    animation: cornerWaves 2s infinite linear;
+    transform: translateY(-1px);
+    animation: wavelets 1.2s infinite linear;
 }
 
 .btn-premium:active {
